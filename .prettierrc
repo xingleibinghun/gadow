@@ -1,0 +1,17 @@
+{
+  "arrowParens": "avoid",
+  "singleQuote": true,
+  "semi": false,
+  "bracketSameLine": false,
+  "trailingComma": "none",
+  "overrides": [
+    {
+      "files": [
+        ".prettierrc"
+      ],
+      "options": {
+        "parser": "json"
+      }
+    }
+  ]
+}
