@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["esnext"],
+    "baseUrl": ".",
+    "rootDir": "./src"
+  },
+  "include": ["src"]
+}
