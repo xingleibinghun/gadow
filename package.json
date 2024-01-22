@@ -3,6 +3,16 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "start": "nx run-many -t start",
+    "start:sdk": "nx start @sohey/sdk",
+    "start:shared": "nx start @sohey/shared",
+    "build": "nx run-many -t build",
+    "build:sdk": "nx build @sohey/sdk",
+    "build:shared": "nx build @sohey/shared",
+    "test:sdk": "nx test @sohey/sdk",
+    "test:shared": "nx test @sohey/shared",
+    "lint:sdk": "nx lint @sohey/sdk",
+    "lint:shared": "nx lint @sohey/shared",
     "lint": "eslint --config .eslintrc --ext packages/*/src/**/*.{js,jsx,ts,tsx}",
     "lint:fix": "eslint --config .eslintrc --fix --ext packages/*/src/**/*.{js,jsx,ts,tsx}"
   },

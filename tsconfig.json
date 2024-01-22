@@ -3,7 +3,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["*"],
+      "@sohey/sdk": ["./packages/sdk"],
+      "@sohey/shared": ["./packages/shared"]
     }
   }
 }

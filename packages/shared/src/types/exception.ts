@@ -1,18 +1,17 @@
 import ErrorStackParser from 'error-stack-parser'
-import { ExceptionTypes } from './common'
+import { ExceptionTypes } from './event'
 
 export type ExceptionData =
-  | CodeException
+  | ErrorException
   | HttpException
   | ResourceException
   | WhiteScreenException
-  | ReactException
 
-export interface CodeException {
+export interface ErrorException {
   message: string
   name?: string
-  cause?: string
   stack?: ErrorStackParser.StackFrame[]
+  filename?: string // 错误顶层 filename(针对特殊场景下的 ErrorEvent)
 }
 
 export interface HttpException {
@@ -20,26 +19,22 @@ export interface HttpException {
   url: string // 接口地址
   method: string // 请求方法
   // durationTime: number // 请求持续时长
-  body?: any
   header?: object
-  isResolve: boolean // fetch promise 状态(非接口响应状态)
-  response?: { // 响应数据
-    ok: boolean
-    redirected: boolean
-    status: number
-    statusText: string
-    type: string
-  }
-  rejectReason: any
+  body?: any
+  ok: boolean // 表明响应是否成功（状态码在 200-299 范围内）
+  status: number
+  response?: any // 响应数据
+  isResolve?: boolean // fetch promise 状态(非接口响应状态)
+  rejectReason?: any
 }
 
 export interface ResourceException {
-  name: string // 脚本地址
-  message: string // 错误信息
+  name: string // 资源名(script/link/img)
+  baseURI: string
+  url: string // 脚本地址
+  attributes: Record<string, any> // 标签属性
 }
 
 export interface WhiteScreenException {
   name: string // 页面地址
 }
-
-export interface ReactException extends CodeException {}
