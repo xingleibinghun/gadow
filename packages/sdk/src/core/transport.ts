@@ -1,5 +1,6 @@
+import { v4 as uuidv4 } from 'uuid'
 import { TransportOptions, Send, TransportTarget } from '../types'
-import { Queue, Types as QueueTypes } from '../utils/index'
+import { Queue, Types as QueueTypes } from '../utils'
 import { options } from './options'
 import { user } from './user'
 import { device } from './device'
@@ -20,13 +21,14 @@ export class Transport {
   transformData(data): TransportTarget {
     data = Object.assign(data, {
       time: +new Date(),
-      apiKey: '', // TODO
+      apiToken: options.apiToken,
       url: location.href,
       device: device.getDevice(),
       user: user.getUser(),
       version: '', // TODO
       breadcrumb: breadcrumb.getAll()
     })
+    if (!data.uuid) data.uuid = uuidv4()
     if (typeof this.beforeTransport === 'function')
       data = this.beforeTransport(data)
     return data
@@ -39,13 +41,16 @@ export class Transport {
   }
 
   xhr(dsn, data) {
-    return fetch(dsn, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    // TODO debug
+    console.log('上报数据', data)
+    return Promise.resolve()
+    // return fetch(dsn, {
+    //   method: 'POST',
+    //   body: JSON.stringify(data),
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   }
+    // })
   }
 
   send: Send = data => {
@@ -55,12 +60,9 @@ export class Transport {
   }
 }
 
-const validateOptions = (options: TransportOptions) => {
-  if (
-    options.beforeTransport &&
-    typeof options.beforeTransport !== 'function'
-  ) {
-    console.error('{beforeTransport} should be a function')
+const validateOptions = (opts: TransportOptions) => {
+  if (opts.beforeTransport && typeof opts.beforeTransport !== 'function') {
+    console.error('`beforeTransport` should be a function')
     return false
   }
   return true

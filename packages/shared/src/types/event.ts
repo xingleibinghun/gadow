@@ -10,7 +10,6 @@ export enum EventTypes {
   Fetch = 'fetch',
   Resource = 'resource',
   Unhandledrejection = 'unhandledrejection',
-  WhiteScreen = 'whiteScreen',
   /**
    * 用户行为
    */
@@ -24,7 +23,7 @@ export enum EventTypes {
   /**
    * 录屏
    */
-  RecordScreen = 'recordScreen'
+  Record = 'record'
 }
 
 /**
@@ -44,6 +43,5 @@ export enum ExceptionTypes {
   Xhr = 'xhr',
   Fetch = 'fetch',
   Resource = 'resource',
-  Unhandledrejection = 'unhandledrejection',
-  WhiteScreen = 'whiteScreen'
+  Unhandledrejection = 'unhandledrejection'
 }

@@ -1,4 +1,4 @@
-import { options } from '../core'
+import { options } from '../core/options'
 
 /**
  * 判断是否同一个路径(不含 URL search)

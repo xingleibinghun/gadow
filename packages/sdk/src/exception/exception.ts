@@ -1,5 +1,5 @@
 import { ExceptionTypes } from '@sohey/shared'
-import { HANDLES } from './config'
+import { HANDLES } from './handles'
 
 export class Exception {
   captureException(err) {
@@ -8,7 +8,7 @@ export class Exception {
 
   captureExceptionWithType(type, err) {
     if (!HANDLES[type]) {
-      console.error('{type} is incorrect')
+      console.error('`type` is incorrect')
     }
     HANDLES[type]?.(err)
   }

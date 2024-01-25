@@ -1,7 +1,6 @@
 import { EventTypes } from '@sohey/shared'
 import { HANDLES as exceptionHandles } from '../exception'
 import { HANDLES as breadcrumbHandles } from '../breadcrumb'
-import { enhanceMap } from './enhance'
 
 /**
  * 事件管理
@@ -14,11 +13,6 @@ class EventEmitter {
   }
 
   init() {
-    // 增强底层函数
-    for (const key in enhanceMap) {
-      enhanceMap[key]()
-    }
-
     // 订阅事件
     for (const key in EventTypes) {
       const event = EventTypes[key]

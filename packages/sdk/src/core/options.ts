@@ -1,15 +1,17 @@
 import { Options as IOptions } from '../types'
 
 export class Options {
-  dsn: Options['dsn']
-  apiToken: Options['apiToken']
+  dsn: IOptions['dsn']
+  apiToken: IOptions['apiToken']
+  record: IOptions['record'] = false
 
   bindModel(options) {
     if (!validateOptions(options)) return this
 
-    const { dsn, apiToken } = options
+    const { dsn, apiToken, record } = options
     this.dsn = dsn
     this.apiToken = apiToken
+    this.record = Boolean(record)
 
     return this
   }
@@ -21,10 +23,10 @@ export class Options {
  */
 const validateOptions = (options: IOptions) => {
   if (!options.dsn) {
-    console.error('{dsn} cannot be empty')
+    console.error('`dsn` cannot be empty')
     return false
   } else if (!options.apiToken) {
-    console.error('{apiToken} cannot be empty')
+    console.error('`apiToken` cannot be empty')
     return false
   }
   return true

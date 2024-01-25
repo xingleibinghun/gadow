@@ -1,11 +1,7 @@
 import ErrorStackParser from 'error-stack-parser'
 import { ExceptionTypes } from './event'
 
-export type ExceptionData =
-  | ErrorException
-  | HttpException
-  | ResourceException
-  | WhiteScreenException
+export type ExceptionData = ErrorException | HttpException | ResourceException
 
 export interface ErrorException {
   message: string
@@ -33,8 +29,4 @@ export interface ResourceException {
   baseURI: string
   url: string // 脚本地址
   attributes: Record<string, any> // 标签属性
-}
-
-export interface WhiteScreenException {
-  name: string // 页面地址
 }

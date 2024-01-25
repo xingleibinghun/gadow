@@ -1,14 +1,16 @@
 /**
  * 增强底层函数 - 触发事件发布器，传入处理后的数据
  */
-import { EventTypes } from '@sohey/shared'
+import { ExceptionTypes, BreadcrumbTypes, throttled } from '@sohey/shared'
 import { global, needIgnoreUrl } from '../utils'
-import { eventEmitter } from './event'
+import { eventEmitter } from '../event'
 
-const enhance = (source, prop, enhanceFn) => {
+const enhance = (source, prop, enhancedFn) => {
   if (!source || !(prop in source) || typeof source[prop] !== 'function') return
-  source[prop] = enhanceFn(source[prop])
+  source[prop] = enhancedFn(source[prop])
 }
+
+/* ========== 异常 ========== */
 
 /**
  * error
@@ -24,8 +26,8 @@ const enhanceErrorListener = () => {
           e.target instanceof HTMLLinkElement ||
           e.target instanceof HTMLImageElement)
       const event = isResourceLoadedError
-        ? EventTypes.Resource
-        : EventTypes.Error
+        ? ExceptionTypes.Resource
+        : ExceptionTypes.Error
       eventEmitter.emit(event, e)
     },
     true
@@ -38,7 +40,7 @@ const enhanceErrorListener = () => {
  */
 const enhanceUnhandledrejectionListener = () => {
   global.addEventListener('unhandledrejection', e => {
-    eventEmitter.emit(EventTypes.Unhandledrejection, e)
+    eventEmitter.emit(ExceptionTypes.Unhandledrejection, e)
   })
 }
 
@@ -85,7 +87,7 @@ const enhanceXhr = () => {
             const { response, status } = target
             const requestInfo = this.__requestInfo
             const ok = 200 <= status && status <= 299
-            eventEmitter.emit(EventTypes.Xhr, {
+            eventEmitter.emit(ExceptionTypes.Xhr, {
               url: requestInfo.url,
               method: requestInfo.method,
               header: requestInfo.header,
@@ -123,7 +125,7 @@ const enhanceFetch = () => {
               .clone()
               .text()
               .then(text => {
-                eventEmitter.emit(EventTypes.Fetch, {
+                eventEmitter.emit(ExceptionTypes.Fetch, {
                   url,
                   method: init.method || 'GET',
                   header: init.header || {},
@@ -138,7 +140,7 @@ const enhanceFetch = () => {
           .catch(rejectReason => {
             const url = input instanceof Request ? input.url : input
             if (needIgnoreUrl(url)) return
-            eventEmitter.emit(EventTypes.Fetch, {
+            eventEmitter.emit(ExceptionTypes.Fetch, {
               url,
               method: init.method || 'GET',
               header: init.header || {},
@@ -157,9 +159,83 @@ const enhanceFetch = () => {
   })
 }
 
-export const enhanceMap = {
-  error: enhanceErrorListener,
-  unhandledrejection: enhanceUnhandledrejectionListener,
-  xhr: enhanceXhr,
-  fetch: enhanceFetch
+/* ========== 异常 - end ========== */
+
+/* ========== 用户行为 ========== */
+
+/**
+ * history
+ *  TODO 传入路由配置模式，按需 enhance
+ */
+const enhanceHistory = () => {
+  if (!('history' in global)) return
+
+  let prev = location.href.slice(location.origin.length)
+  const originOnpopstate = global.onpopstate
+  global.onpopstate = event => {
+    const from = prev
+    const to = location.href.slice(location.origin.length)
+    prev = to
+    eventEmitter.emit(BreadcrumbTypes.History, {
+      from,
+      to
+    })
+
+    originOnpopstate && originOnpopstate(event)
+  }
+
+  const enhanceHistoryFn = origin => {
+    return function (...args) {
+      const to = args.length === 3 ? args[2] : undefined
+      const from = prev
+      prev = to
+      eventEmitter.emit(BreadcrumbTypes.History, {
+        from,
+        to
+      })
+
+      return origin.apply(this, args)
+    }
+  }
+  enhance(global.history, 'pushState', enhanceHistoryFn)
+  enhance(global.history, 'replaceState', enhanceHistoryFn)
+}
+
+/**
+ * hashchange
+ *  TODO 传入路由配置模式，按需 enhance
+ */
+const enhanceHashchange = () => {
+  if (!('onhashchange' in global)) return
+
+  global.addEventListener('hashchange', (e: HashChangeEvent) => {
+    eventEmitter.emit(BreadcrumbTypes.Hashchange, e)
+  })
+}
+
+/**
+ * click
+ */
+const enhanceClick = () => {
+  if (!('document' in global)) return
+
+  const onClick = throttled(e => {
+    eventEmitter.emit(BreadcrumbTypes.Click, e)
+  })
+  global.document.addEventListener('click', onClick)
+}
+
+/* ========== 用户行为 - end ========== */
+
+export const enhanceInit = () => {
+  /* 异常 */
+  enhanceErrorListener()
+  enhanceUnhandledrejectionListener()
+  enhanceXhr()
+  enhanceFetch()
+
+  /* 用户行为 */
+  enhanceHistory()
+  enhanceHashchange()
+  enhanceClick()
 }
