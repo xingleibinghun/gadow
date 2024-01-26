@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@sohey/shared": "workspace:*",
-    "rrweb": "2.0.0-alpha.4",
+    "rrweb": "2.0.0-alpha.11",
     "uuid": "^9.0.1"
   },
   "browserslist": {
