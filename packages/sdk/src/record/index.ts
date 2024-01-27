@@ -6,8 +6,8 @@ export class Record {
   // 事件组
   eventsMatrix: RecordEvent[][] = [[]]
   // 有效(需要上报)的事件组数量
-  effectiveEventsMatrix: number = 2
-  stopRecordFn
+  maxEventsMatrix: number = 2
+  stopRecordFn?: () => void
 
   init() {
     if (this.stopRecordFn) {
@@ -27,13 +27,13 @@ export class Record {
   }
 
   checkEventsMatrix() {
-    while (this.eventsMatrix.length > this.effectiveEventsMatrix) {
+    while (this.eventsMatrix.length > this.maxEventsMatrix) {
       this.eventsMatrix.shift()
     }
   }
 
-  transportRecentEvents(uuid) {
-    const events = Array.prototype.flat.call(this.eventsMatrix)
+  transportRecentEvents(uuid: string) {
+    const events = Array.prototype.flat.call(this.eventsMatrix) as RecordEvent[]
     transport.send({
       type: EventTypes.Record,
       data: {

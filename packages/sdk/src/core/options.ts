@@ -1,11 +1,11 @@
 import { Options as IOptions } from '../types'
 
 export class Options {
-  dsn: IOptions['dsn']
-  apiToken: IOptions['apiToken']
+  dsn: IOptions['dsn'] = ''
+  apiToken: IOptions['apiToken'] = ''
   record: IOptions['record'] = false
 
-  bindModel(options) {
+  bindModel(options: IOptions) {
     if (!validateOptions(options)) return this
 
     const { dsn, apiToken, record } = options

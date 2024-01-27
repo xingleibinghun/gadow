@@ -17,5 +17,5 @@ export class User {
 }
 
 export const user = new User()
-export const setUser = userInfo => user.setUser(userInfo)
+export const setUser: SetUser = userInfo => user.setUser(userInfo)
 export const clearUser = () => user.clearUser()

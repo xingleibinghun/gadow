@@ -1,8 +1,7 @@
 import { UAParser } from 'ua-parser-js'
-import { DeviceInfo } from '../types'
 
 export class Device {
-  device: DeviceInfo
+  device: Record<string, any> = {}
 
   getDevice() {
     return this.device || (this.device = new UAParser().getResult())

@@ -1,9 +1,9 @@
-import { BreadcrumbTypes } from './event'
+import { EventTypes } from './event'
 
 export type BreadcrumbData = HistoryBreadcrumb | ClickBreadcrumb
 
 export interface HistoryBreadcrumb {
-  type: BreadcrumbTypes.History | BreadcrumbTypes.Hashchange
+  type: EventTypes.History | EventTypes.Hashchange
   data: {
     from: string
     to: string
@@ -11,6 +11,6 @@ export interface HistoryBreadcrumb {
 }
 
 export interface ClickBreadcrumb {
-  type: BreadcrumbTypes.Click
+  type: EventTypes.Click
   data: string
 }

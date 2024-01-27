@@ -1,10 +1,29 @@
 {
   "name": "@sohey/shared",
   "version": "1.0.0",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/",
+    "README.md"
+  ],
   "scripts": {
     "start": "rm -rf ./dist && rollup -c --bundleConfigAsCjs -w",
     "build": "rm -rf ./dist && rollup -c --bundleConfigAsCjs",
-    "test": "node ./__tests__/shared.test.js"
+    "test": "node ./__tests__/shared.test.js",
+    "lint": "eslint --config .eslintrc 'src/**/*.{js,ts,tsx}'"
+  },
+  "dependencies": {
+    "error-stack-parser": "^2.1.4"
+  },
+  "devDependencies": {
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "rollup": "^4.9.5",
+    "rollup-plugin-typescript2": "^0.36.0"
   }
 }

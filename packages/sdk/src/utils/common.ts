@@ -3,7 +3,7 @@ import { options } from '../core/options'
 /**
  * 判断是否同一个路径(不含 URL search)
  */
-export const isSamePath = (url1, url2) => {
+export const isSamePath = (url1: string, url2: string) => {
   try {
     const parsedUrl1 = new URL(url1)
     const parsedUrl2 = new URL(url2)
@@ -22,6 +22,29 @@ export const isSamePath = (url1, url2) => {
  * 是否需要忽略
  * @param url
  */
-export const needIgnoreUrl = url => {
+export const needIgnoreUrl = (url: string) => {
   return isSamePath(options.dsn, url)
+}
+
+export const throttled = (fn: Function, delay = 10) => {
+  let lastTs = 0
+  return function (...args: any[]) {
+    const now = Date.now()
+    if (now - lastTs >= delay) {
+      fn(...args)
+      lastTs = now
+    }
+  }
+}
+
+export const getRelativeUrl = (url?: string) => {
+  let urlInstance: URL | Location = location
+  if (url) {
+    try {
+      urlInstance = new URL(url)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+  return urlInstance.href.slice(urlInstance.origin.length)
 }

@@ -25,23 +25,3 @@ export enum EventTypes {
    */
   Record = 'record'
 }
-
-/**
- * 用户行为
- */
-export enum BreadcrumbTypes {
-  History = 'history',
-  Hashchange = 'hashchange',
-  Click = 'click'
-}
-
-/**
- * 异常
- */
-export enum ExceptionTypes {
-  Error = 'error',
-  Xhr = 'xhr',
-  Fetch = 'fetch',
-  Resource = 'resource',
-  Unhandledrejection = 'unhandledrejection'
-}

@@ -1,2 +1,2 @@
-export * from './sdk-core.ts'
+export * from './sdk-core'
 export { record } from './record'

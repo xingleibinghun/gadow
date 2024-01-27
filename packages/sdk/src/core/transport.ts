@@ -1,5 +1,10 @@
 import { v4 as uuidv4 } from 'uuid'
-import { TransportOptions, Send, TransportTarget } from '../types'
+import {
+  TransportOptions,
+  Send,
+  TransportTarget,
+  Options as IOptions, TransportOrigin
+} from '../types'
 import { Queue, Types as QueueTypes } from '../utils'
 import { options } from './options'
 import { user } from './user'
@@ -18,8 +23,8 @@ export class Transport {
     return this
   }
 
-  transformData(data): TransportTarget {
-    data = Object.assign(data, {
+  transformData(data: TransportOrigin): TransportTarget {
+    let result = Object.assign(data, {
       time: +new Date(),
       apiToken: options.apiToken,
       url: location.href,
@@ -27,36 +32,32 @@ export class Transport {
       user: user.getUser(),
       version: '', // TODO
       breadcrumb: breadcrumb.getAll()
-    })
-    if (!data.uuid) data.uuid = uuidv4()
+    }) as TransportTarget
+    if (!result.uuid) result.uuid = uuidv4()
     if (typeof this.beforeTransport === 'function')
-      data = this.beforeTransport(data)
-    return data
+      result = this.beforeTransport(result)
+    return result
   }
 
-  request(data) {
+  request(data: TransportTarget) {
     const dsn = options.dsn
     this.queue.add(() => this.xhr(dsn, data))
     // TODO add gif request
   }
 
-  xhr(dsn, data) {
-    // TODO debug
-    console.log('上报数据', data)
-    return Promise.resolve()
-    // return fetch(dsn, {
-    //   method: 'POST',
-    //   body: JSON.stringify(data),
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   }
-    // })
+  xhr(dsn: IOptions['dsn'], data: TransportTarget) {
+    return fetch(dsn, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
   }
 
   send: Send = data => {
     if (!data.type) return
-    data = this.transformData(data)
-    this.request(data)
+    this.request(this.transformData(data))
   }
 }
 

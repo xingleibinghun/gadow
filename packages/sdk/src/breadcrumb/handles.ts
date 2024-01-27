@@ -1,27 +1,28 @@
 /**
  * 用户行为事件的处理函数集合
  */
-import { BreadcrumbTypes, getRelativeUrl } from '@sohey/shared'
+import { EventTypes, HistoryBreadcrumb } from '@sohey/shared'
+import { getRelativeUrl } from '../utils'
 import { breadcrumb } from './breadcrumb'
 
-const handleFactory = transform => {
-  return (...args) => {
+const handleFactory = (transform: Function) => {
+  return (...args: any[]) => {
     const data = transform(...args)
     if (!data) return
     breadcrumb.add(data)
   }
 }
 
-const transformHistory = data => {
+const transformHistory = (data: HistoryBreadcrumb['data']) => {
   return {
-    type: BreadcrumbTypes.History,
+    type: EventTypes.History,
     data
   }
 }
 
 const transformHashChange = (e: HashChangeEvent) => {
   return {
-    type: BreadcrumbTypes.Hashchange,
+    type: EventTypes.Hashchange,
     data: {
       from: getRelativeUrl(e.oldURL),
       to: getRelativeUrl(e.newURL)
@@ -29,16 +30,16 @@ const transformHashChange = (e: HashChangeEvent) => {
   }
 }
 
-const transformClick = e => {
+const transformClick = (e: Event) => {
   // TODO 简化 data -> 自身标签加前部分子节点内容
   return {
-    type: BreadcrumbTypes.Click,
-    data: e.target.outerHTML
+    type: EventTypes.Click,
+    data: (e.target as HTMLElement).outerHTML
   }
 }
 
 export const HANDLES = {
-  [BreadcrumbTypes.History]: handleFactory(transformHistory),
-  [BreadcrumbTypes.Hashchange]: handleFactory(transformHashChange),
-  [BreadcrumbTypes.Click]: handleFactory(transformClick)
+  [EventTypes.History]: handleFactory(transformHistory),
+  [EventTypes.Hashchange]: handleFactory(transformHashChange),
+  [EventTypes.Click]: handleFactory(transformClick)
 }

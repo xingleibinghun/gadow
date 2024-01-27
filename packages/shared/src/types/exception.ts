@@ -1,5 +1,5 @@
 import ErrorStackParser from 'error-stack-parser'
-import { ExceptionTypes } from './event'
+import { EventTypes } from './event'
 
 export type ExceptionData = ErrorException | HttpException | ResourceException
 
@@ -11,11 +11,11 @@ export interface ErrorException {
 }
 
 export interface HttpException {
-  type: ExceptionTypes.Xhr | ExceptionTypes.Fetch
+  type: EventTypes.Xhr | EventTypes.Fetch
   url: string // 接口地址
   method: string // 请求方法
   // durationTime: number // 请求持续时长
-  header?: object
+  headers?: object
   body?: any
   ok: boolean // 表明响应是否成功（状态码在 200-299 范围内）
   status: number

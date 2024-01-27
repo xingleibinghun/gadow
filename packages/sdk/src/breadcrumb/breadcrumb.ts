@@ -1,8 +1,10 @@
-export class Breadcrumb {
-  queue = []
-  maxLSize: 10
+import { BreadcrumbData } from '@sohey/shared'
 
-  add(data) {
+export class Breadcrumb {
+  queue: BreadcrumbData[] = []
+  maxSize: number = 10
+
+  add(data: BreadcrumbData) {
     if (!Object.prototype.hasOwnProperty.call(data, 'type')) return
     this.queue.push(data)
     this.checkSize()
@@ -13,7 +15,7 @@ export class Breadcrumb {
   }
 
   checkSize() {
-    while (this.queue.length > this.maxLSize) {
+    while (this.queue.length > this.maxSize) {
       this.queue.shift()
     }
   }

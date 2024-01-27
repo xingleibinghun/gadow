@@ -5,9 +5,7 @@ import ErrorStackParser from 'error-stack-parser'
  * 获取错误信息
  * @param err
  */
-export const getErrorInfo = (
-  err: Error | ErrorEvent | unknown
-): ErrorException => {
+export const getErrorInfo = (err?: Error | ErrorEvent): ErrorException | undefined => {
   if (!err) return
 
   if (err instanceof Error) {
@@ -18,7 +16,7 @@ export const getErrorInfo = (
     }
   } else if (err instanceof ErrorEvent) {
     return {
-      ...getErrorInfo(err.error),
+      ...(getErrorInfo(err.error) as ErrorException),
       // 一些特殊场景下 ErrorEvent.error.stack 错误栈信息太少，所以补充个错误顶层的 filename
       filename: err.filename
     }

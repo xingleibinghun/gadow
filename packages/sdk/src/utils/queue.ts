@@ -4,10 +4,11 @@ export enum Types {
   Async = 'async',
   Sync = 'sync'
 }
+type Task = () => void
 
 abstract class BaseQueue {
   // 任务队列
-  tasks: any[]
+  tasks: Task[] = []
 
   /**
    *
@@ -17,7 +18,7 @@ abstract class BaseQueue {
   constructor(public type: Types, public autoExecute: boolean) {}
 
   // 添加任务
-  abstract add(fn): void
+  abstract add(f: Function): void
 
   // 执行任务队列
   abstract execute(): void
@@ -28,7 +29,7 @@ abstract class BaseQueue {
 }
 
 export class Queue extends BaseQueue {
-  tasks = []
+  tasks: Task[] = []
 
   constructor(
     public type: Types = Types.Sync,
@@ -37,7 +38,7 @@ export class Queue extends BaseQueue {
     super(type, autoExecute)
   }
 
-  add(fn) {
+  add(fn: Task) {
     if (typeof fn !== 'function') return
     this.tasks.push(fn)
 
@@ -48,9 +49,9 @@ export class Queue extends BaseQueue {
 
   execute() {
     if (this.type === Types.Async) {
-      if (global.requestIdleCallback) {
+      if ('requestIdleCallback' in global) {
         requestIdleCallback(dealine => this.workLoop(dealine))
-      } else if (global.Promise) {
+      } else if ('Promise' in global) {
         Promise.resolve().then(this.executeAll)
       } else {
         setTimeout(this.executeAll)
@@ -62,14 +63,16 @@ export class Queue extends BaseQueue {
 
   executeAll() {
     while (this.tasks.length) {
-      this.tasks.shift()()
+      const fn = this.tasks.shift()
+      typeof fn === 'function' && fn()
     }
   }
 
-  workLoop(dealine) {
+  workLoop: IdleRequestCallback = dealine => {
     let shouldYield = false
     while (this.tasks.length && !shouldYield) {
-      this.tasks.shift()()
+      const fn = this.tasks.shift()
+      typeof fn === 'function' && fn()
       shouldYield = dealine.timeRemaining() < 1
     }
     if (this.tasks.length) {

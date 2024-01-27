@@ -1,11 +1,11 @@
 /**
  * 增强底层函数 - 触发事件发布器，传入处理后的数据
  */
-import { ExceptionTypes, BreadcrumbTypes, throttled } from '@sohey/shared'
-import { global, needIgnoreUrl } from '../utils'
+import { EventTypes } from '@sohey/shared'
+import { global, needIgnoreUrl, throttled } from '../utils'
 import { eventEmitter } from '../event'
 
-const enhance = (source, prop, enhancedFn) => {
+const enhance = (source: any, prop: string, enhancedFn: Function) => {
   if (!source || !(prop in source) || typeof source[prop] !== 'function') return
   source[prop] = enhancedFn(source[prop])
 }
@@ -26,8 +26,8 @@ const enhanceErrorListener = () => {
           e.target instanceof HTMLLinkElement ||
           e.target instanceof HTMLImageElement)
       const event = isResourceLoadedError
-        ? ExceptionTypes.Resource
-        : ExceptionTypes.Error
+        ? EventTypes.Resource
+        : EventTypes.Error
       eventEmitter.emit(event, e)
     },
     true
@@ -40,7 +40,7 @@ const enhanceErrorListener = () => {
  */
 const enhanceUnhandledrejectionListener = () => {
   global.addEventListener('unhandledrejection', e => {
-    eventEmitter.emit(ExceptionTypes.Unhandledrejection, e)
+    eventEmitter.emit(EventTypes.Unhandledrejection, e)
   })
 }
 
@@ -48,13 +48,14 @@ const enhanceUnhandledrejectionListener = () => {
  * xhr
  */
 const enhanceXhr = () => {
-  enhance(XMLHttpRequest.prototype, 'open', origin => {
-    return function (...args) {
+  enhance(XMLHttpRequest.prototype, 'open', (origin: any) => {
+    return function (...args: any[]): void {
       try {
+        // @ts-ignore
         this.__requestInfo = {
           method: args[0],
           url: args[1],
-          header: {}
+          headers: {}
         }
       } catch (err) {
         console.error(
@@ -62,41 +63,52 @@ const enhanceXhr = () => {
           err
         )
       }
+      // @ts-ignore
       origin.apply(this, args)
     }
   })
-  enhance(XMLHttpRequest.prototype, 'setRequestHeader', origin => {
-    return function (header, value) {
+  enhance(XMLHttpRequest.prototype, 'setRequestHeader', (origin: any) => {
+    // @ts-ignore
+    return function (headers, value): void {
       try {
-        this.__requestInfo.header[header] = value
+        // @ts-ignore
+        this.__requestInfo.headers[headers] = value
       } catch (err) {
         console.error(
           'Running the overridden XMLHttpRequest.prototype.setRequestHeader method failed',
           err
         )
       }
-      origin.call(this, header, value)
+      // @ts-ignore
+      origin.call(this, headers, value)
     }
   })
-  enhance(XMLHttpRequest.prototype, 'send', origin => {
-    return function (body) {
+  enhance(XMLHttpRequest.prototype, 'send', (origin: any) => {
+    // @ts-ignore
+    return function (body): void {
       try {
+        // @ts-ignore
         if (!needIgnoreUrl(this.__requestInfo.url)) {
-          this.addEventListener('loadend', function (progressEvent) {
-            const { target } = progressEvent
-            const { response, status } = target
-            const requestInfo = this.__requestInfo
-            const ok = 200 <= status && status <= 299
-            eventEmitter.emit(ExceptionTypes.Xhr, {
-              url: requestInfo.url,
-              method: requestInfo.method,
-              header: requestInfo.header,
-              body,
-              ok,
-              status,
-              response
-            })
-          })
+          // @ts-ignore
+          this.addEventListener(
+            'loadend',
+            function (progressEvent: ProgressEvent) {
+              const { target } = progressEvent
+              const { response, status } = target as any
+              // @ts-ignore
+              const requestInfo = this.__requestInfo
+              const ok = 200 <= status && status <= 299
+              eventEmitter.emit(EventTypes.Xhr, {
+                url: requestInfo.url,
+                method: requestInfo.method,
+                headers: requestInfo.headers,
+                body,
+                ok,
+                status,
+                response
+              })
+            }
+          )
         }
       } catch (err) {
         console.error(
@@ -104,6 +116,7 @@ const enhanceXhr = () => {
           err
         )
       }
+      // @ts-ignore
       origin.call(this, body)
     }
   })
@@ -113,9 +126,17 @@ const enhanceXhr = () => {
  * fetch
  */
 const enhanceFetch = () => {
-  enhance(global, 'fetch', origin => {
-    return (input, init) => {
-      const promise = origin(input, init)
+  enhance(global, 'fetch', (origin: any) => {
+    return (
+      input: string | Request,
+      init: {
+        method?: string
+        headers?: {}
+        body?: unknown
+        mode?: string
+      } = {}
+    ) => {
+      const promise: Promise<Response> = origin(input, init)
       try {
         promise
           .then(response => {
@@ -124,11 +145,11 @@ const enhanceFetch = () => {
             response
               .clone()
               .text()
-              .then(text => {
-                eventEmitter.emit(ExceptionTypes.Fetch, {
+              .then((text: string) => {
+                eventEmitter.emit(EventTypes.Fetch, {
                   url,
                   method: init.method || 'GET',
-                  header: init.header || {},
+                  headers: init.headers || {},
                   body: init.body,
                   ok: response.ok,
                   status: response.status,
@@ -137,13 +158,13 @@ const enhanceFetch = () => {
                 })
               })
           })
-          .catch(rejectReason => {
+          .catch((rejectReason: any) => {
             const url = input instanceof Request ? input.url : input
             if (needIgnoreUrl(url)) return
-            eventEmitter.emit(ExceptionTypes.Fetch, {
+            eventEmitter.emit(EventTypes.Fetch, {
               url,
               method: init.method || 'GET',
-              header: init.header || {},
+              headers: init.headers || {},
               body: init.body,
               ok: false,
               status: 0,
@@ -176,24 +197,26 @@ const enhanceHistory = () => {
     const from = prev
     const to = location.href.slice(location.origin.length)
     prev = to
-    eventEmitter.emit(BreadcrumbTypes.History, {
+    eventEmitter.emit(EventTypes.History, {
       from,
       to
     })
 
+    // @ts-ignore
     originOnpopstate && originOnpopstate(event)
   }
 
-  const enhanceHistoryFn = origin => {
-    return function (...args) {
+  const enhanceHistoryFn = (origin: any) => {
+    return function (...args: any[]) {
       const to = args.length === 3 ? args[2] : undefined
       const from = prev
       prev = to
-      eventEmitter.emit(BreadcrumbTypes.History, {
+      eventEmitter.emit(EventTypes.History, {
         from,
         to
       })
 
+      // @ts-ignore
       return origin.apply(this, args)
     }
   }
@@ -209,7 +232,7 @@ const enhanceHashchange = () => {
   if (!('onhashchange' in global)) return
 
   global.addEventListener('hashchange', (e: HashChangeEvent) => {
-    eventEmitter.emit(BreadcrumbTypes.Hashchange, e)
+    eventEmitter.emit(EventTypes.Hashchange, e)
   })
 }
 
@@ -219,8 +242,8 @@ const enhanceHashchange = () => {
 const enhanceClick = () => {
   if (!('document' in global)) return
 
-  const onClick = throttled(e => {
-    eventEmitter.emit(BreadcrumbTypes.Click, e)
+  const onClick = throttled((e: Event) => {
+    eventEmitter.emit(EventTypes.Click, e)
   })
   global.document.addEventListener('click', onClick)
 }

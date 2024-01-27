@@ -1,4 +1,4 @@
-type RecordEvent = {
+export type RecordEvent = {
   type: number
   data: unknown
   timestamp: number
