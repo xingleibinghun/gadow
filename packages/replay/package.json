@@ -1,0 +1,35 @@
+{
+  "name": "@sohey/replay",
+  "version": "1.0.0",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "rm -rf ./dist && rollup -c --bundleConfigAsCjs -w",
+    "build": "rm -rf ./dist && rollup -c --bundleConfigAsCjs",
+    "test": "jest",
+    "lint": "eslint --config .eslintrc 'src/**/*.{js,ts,tsx}'"
+  },
+  "dependencies": {
+    "@sohey/core": "workspace:*",
+    "@sohey/types": "workspace:*",
+    "@sohey/utils": "workspace:*",
+    "rrweb": "2.0.0-alpha.11"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

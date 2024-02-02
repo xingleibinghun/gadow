@@ -40,3 +40,4 @@ Thumbs.db
 
 # test
 /packages/*/test
+/packages/*/coverage

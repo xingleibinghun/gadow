@@ -1,0 +1,40 @@
+{
+  "name": "@sohey/core",
+  "version": "1.0.0",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "rm -rf ./dist && rollup -c --bundleConfigAsCjs -w",
+    "build": "rm -rf ./dist && rollup -c --bundleConfigAsCjs",
+    "test": "jest",
+    "lint": "eslint --config .eslintrc 'src/**/*.{js,ts,tsx}'"
+  },
+  "dependencies": {
+    "@sohey/types": "workspace:*",
+    "@sohey/utils": "workspace:*",
+    "error-stack-parser": "^2.1.4",
+    "rrweb": "2.0.0-alpha.11",
+    "ua-parser-js": "^1.0.37",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/uuid": "^9.0.8"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
