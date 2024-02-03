@@ -4,8 +4,11 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["*"],
-      "@sohey/sdk": ["./packages/sdk"],
-      "@sohey/shared": ["./packages/shared"]
+      "@sohey/browser": ["./packages/browser"],
+      "@sohey/core": ["./packages/core"],
+      "@sohey/replay": ["./packages/replay"],
+      "@sohey/utils": ["./packages/utils"],
+      "@sohey/types": ["./packages/types"]
     }
   }
 }

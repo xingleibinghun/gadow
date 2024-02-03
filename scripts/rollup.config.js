@@ -1,5 +1,5 @@
 import { babel } from '@rollup/plugin-babel'
-import rollupTypescript from 'rollup-plugin-typescript2'
+import typescript from '@rollup/plugin-typescript'
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
 import json from '@rollup/plugin-json'
@@ -9,7 +9,7 @@ import fs from 'fs'
 import path from 'path'
 
 function getConfig(format, filename, { includesTypes, minify } = {}) {
-  const pkg = fs.readFileSync(path.resolve(__dirname, 'package.json'), 'utf-8')
+  const pkg = fs.readFileSync(path.join(__dirname, 'package.json'), 'utf-8')
   const { name } = JSON.parse(pkg)
   return {
     input: 'src/index',
@@ -23,7 +23,14 @@ function getConfig(format, filename, { includesTypes, minify } = {}) {
       resolve({
         extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx']
       }),
-      ...(includesTypes ? [rollupTypescript()] : []),
+      ...(includesTypes
+        ? [
+            typescript({
+              tsconfig: path.join(__dirname, 'tsconfig.json'),
+              exclude: ['__tests__']
+            })
+          ]
+        : []),
       commonjs(),
       babel({
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
