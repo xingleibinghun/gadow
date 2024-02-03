@@ -5,6 +5,7 @@ import {
   TransportRequest,
   ClientOptions
 } from '@sohey/types'
+import fetch from 'node-fetch'
 
 const fetchRequest: TransportRequest = (
   options: TransportOptions,
