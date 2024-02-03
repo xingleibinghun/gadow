@@ -16,7 +16,7 @@ import { HANDLES as BREADCRUMB_HANDLES } from './breadcrumb'
 export const init = (opts: Options) => {
   const clientOptions: ClientOptions = {
     ...opts,
-    transport: transport
+    transport: opts.transport || transport
   }
 
   const client = new BrowserClient(clientOptions)
