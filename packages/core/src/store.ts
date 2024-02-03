@@ -5,10 +5,8 @@ import {
   User,
   StoreOptions
 } from '@sohey/types'
-import { hasProperty } from '@sohey/utils'
+import { hasProperty, global } from '@sohey/utils'
 import { UAParser } from 'ua-parser-js'
-
-let globalStore: Store | undefined
 
 export class Store implements IStore {
   protected user: User
@@ -78,12 +76,19 @@ export class Store implements IStore {
 }
 
 export const setStore = (store: Store) => {
-  globalStore = store
+  if (!global.__Sohey) {
+    global.__Sohey = {
+      store
+    }
+  } else {
+    global.__Sohey.store = store
+  }
 }
 
 export const getStore = (): Store => {
-  if (!globalStore) {
+  if (!global.__Sohey || !global.__Sohey.store) {
     setStore(new Store())
   }
-  return globalStore as Store
+  // @ts-ignore
+  return global.__Sohey.store as Store
 }
