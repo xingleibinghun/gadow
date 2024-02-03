@@ -8,7 +8,9 @@ type Task = () => void
 
 abstract class BaseQueue {
   // 任务队列
-  tasks: Task[] = []
+  protected tasks: Task[] = []
+
+  protected executing: boolean = false
 
   /**
    *
@@ -26,10 +28,15 @@ abstract class BaseQueue {
   getTasks() {
     return this.tasks
   }
+
+  setExecuting(executing: boolean) {
+    this.executing = executing
+  }
 }
 
 export class Queue extends BaseQueue {
-  tasks: Task[] = []
+  protected tasks: Task[] = []
+  protected executing: boolean = false
 
   constructor(
     public type: Types = Types.Sync,
@@ -42,12 +49,13 @@ export class Queue extends BaseQueue {
     if (typeof fn !== 'function') return
     this.tasks.push(fn)
 
-    if (this.autoExecute) {
+    if (this.autoExecute && !this.executing) {
       this.execute()
     }
   }
 
   execute() {
+    if (this.executing) return
     if (this.type === Types.Async) {
       if ('requestIdleCallback' in global) {
         requestIdleCallback(dealine => this.workLoop(dealine))
@@ -63,11 +71,13 @@ export class Queue extends BaseQueue {
     }
   }
 
-  executeAll() {
+  protected executeAll() {
+    this.setExecuting(true)
     while (this.tasks.length) {
       const fn = this.tasks.shift()
       typeof fn === 'function' && fn()
     }
+    this.setExecuting(false)
   }
 
   workLoop: IdleRequestCallback = dealine => {

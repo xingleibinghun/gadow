@@ -2,18 +2,18 @@ import { ErrorException } from '@sohey/types'
 import { v4 as uuidv4 } from 'uuid'
 import ErrorStackParser from 'error-stack-parser'
 
-export const enhance = (source: any, prop: string, enhancedFn: Function) => {
+export const enhance = (source: any, prop: string, enhancedFn: Function): void => {
   if (!source || !(prop in source) || typeof source[prop] !== 'function') return
   source[prop] = enhancedFn(source[prop])
 }
 
-export const getInternalPluginName = (name: string) => {
+export const getInternalPluginName = (name: string): string => {
   return `Sohey_${String(name).toLowerCase()}`
 }
 
 export const generateId = uuidv4
 
-export const hasOwnProperty = (obj: object, key: string) =>
+export const hasProperty = (obj: object, key: string): boolean =>
   Object.hasOwnProperty.call(obj, key)
 
 export const deduplicateArray = (arr: unknown[]) => {

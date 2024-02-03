@@ -6,8 +6,8 @@ import {
   EventTypes,
   PluginSetupOptions
 } from '@sohey/types'
-import { generateId, getErrorInfo, global, hasOwnProperty } from '@sohey/utils'
-import { eventEmitter } from './event'
+import { generateId, getErrorInfo, global, hasProperty } from '@sohey/utils'
+import { getEventEmitter } from './event'
 
 interface PluginMap {
   [key: string]: any
@@ -20,7 +20,7 @@ export abstract class BaseClient<O extends ClientOptions> implements Client<O> {
   protected transport?: Transport
   protected readonly SETUP_OPTIONS: PluginSetupOptions = {
     subscribe: (events: EventTypes[], callback: Function) =>
-      eventEmitter.batchOn(events, callback)
+      getEventEmitter().batchOn(events, callback)
   }
 
   constructor(options: O) {
@@ -53,7 +53,7 @@ export abstract class BaseClient<O extends ClientOptions> implements Client<O> {
   addPlugin(plugin: Plugin) {
     if (!plugin.setup) return
     const name =
-      plugin.name && !hasOwnProperty(this.plugins, plugin.name)
+      plugin.name && !hasProperty(this.plugins, plugin.name)
         ? plugin.name
         : generateId()
     this.plugins[name] = plugin

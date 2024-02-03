@@ -37,11 +37,11 @@ function getConfig(format, filename, { includesTypes, minify } = {}) {
   }
 }
 
-const configs = [
-  getConfig('esm', 'index.js', { includesTypes: true }),
-  getConfig('cjs', 'index.cjs.js'),
-  getConfig('umd', 'index.umd.js'),
-  getConfig('umd', 'index.umd.min.js', { minify: true })
-]
-
-export default configs
+export const getRollupConfigs = () => {
+  return [
+    getConfig('esm', 'index.js', { includesTypes: true }),
+    getConfig('cjs', 'index.cjs.js'),
+    getConfig('umd', 'index.umd.js'),
+    getConfig('umd', 'index.umd.min.js', { minify: true })
+  ]
+}

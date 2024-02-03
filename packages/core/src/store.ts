@@ -1,10 +1,16 @@
-import { BreadcrumbData, Device, Store as IStore, User } from '@sohey/types'
-import { hasOwnProperty } from '@sohey/utils'
+import {
+  BreadcrumbData,
+  Device,
+  Store as IStore,
+  User,
+  StoreOptions
+} from '@sohey/types'
+import { hasProperty } from '@sohey/utils'
 import { UAParser } from 'ua-parser-js'
 
 let globalStore: Store | undefined
 
-class Store implements IStore {
+export class Store implements IStore {
   protected user: User
 
   protected device: Device
@@ -14,9 +20,10 @@ class Store implements IStore {
 
   protected replayId: string
 
-  constructor() {
+  constructor(options?: StoreOptions) {
+    const opts = options || {}
     this.breadcrumbs = []
-    this.maxBreadcrumbs = 10
+    this.maxBreadcrumbs = opts.maxBreadcrumbs || 10
     this.replayId = ''
     this.init()
   }
@@ -50,7 +57,7 @@ class Store implements IStore {
   }
 
   addBreadcrumb(data: BreadcrumbData) {
-    if (!hasOwnProperty(data, 'type')) return
+    if (!hasProperty(data, 'type')) return
     this.breadcrumbs.push(data)
     this.checkBreadcrumbs()
   }
@@ -80,5 +87,3 @@ export const getStore = (): Store => {
   }
   return globalStore as Store
 }
-
-

@@ -18,8 +18,8 @@ const fetchRequest: TransportRequest = (
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
-        ...options.headers,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        ...options.headers
       }
     })
   } catch (err) {

@@ -1,4 +1,4 @@
-import { eventEmitter } from '@sohey/core'
+import { getEventEmitter } from '@sohey/core'
 import {
   EventTypes,
   Options,
@@ -6,7 +6,7 @@ import {
   BreadcrumbTypes,
   ClientOptions
 } from '@sohey/types'
-import { global, hasOwnProperty, deduplicateArray } from '@sohey/utils'
+import { global, hasProperty, deduplicateArray } from '@sohey/utils'
 import { BrowserClient } from './client'
 import { transport } from './transport'
 import { enhanceMap } from './enhance'
@@ -51,7 +51,7 @@ const initEnhance = (options: ClientOptions) => {
         exceptionOptions[event] !== false || breadcrumbOptions[event] !== false
     )
     .forEach(event => {
-      if (hasOwnProperty(enhanceMap, event)) {
+      if (hasProperty(enhanceMap, event)) {
         // @ts-ignore
         enhanceMap[event]()
       }
@@ -74,7 +74,7 @@ const initEventListener = (options: ClientOptions) => {
       .forEach(event => {
         if (handles[event]) {
           // @ts-ignore
-          eventEmitter.on(event as EventTypes, handles[event])
+          getEventEmitter().on(event as EventTypes, handles[event])
         }
       })
   }

@@ -1,9 +1,11 @@
 import { EventTypes } from '@sohey/types'
 
+let globalEventEmitter: EventEmitter | undefined
+
 /**
  * 事件管理
  */
-class EventEmitter {
+export class EventEmitter {
   private pool: {
     [Key in EventTypes]?: Function[]
   }
@@ -33,6 +35,7 @@ class EventEmitter {
     this.on(event, callback)
   }
 
+  // args 类型待完善
   emit(event: EventTypes, ...args: any[]) {
     const callbacks = this.pool[event]
     if (callbacks) {
@@ -51,4 +54,13 @@ class EventEmitter {
   }
 }
 
-export const eventEmitter = new EventEmitter()
+export const setEventEmitter = (eventEmitter: EventEmitter) => {
+  globalEventEmitter = eventEmitter
+}
+
+export const getEventEmitter = (): EventEmitter => {
+  if (!globalEventEmitter) {
+    setEventEmitter(new EventEmitter())
+  }
+  return globalEventEmitter as EventEmitter
+}

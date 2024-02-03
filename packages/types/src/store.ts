@@ -25,3 +25,7 @@ export interface Store {
 
   clearBreadcrumbs(): void
 }
+
+export interface StoreOptions {
+  maxBreadcrumbs?: number
+}

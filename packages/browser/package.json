@@ -9,7 +9,7 @@
     "README.md"
   ],
   "scripts": {
-    "start": "rm -rf ./dist && rollup -c --bundleConfigAsCjs -w",
+    "start": "rollup -c --bundleConfigAsCjs -w",
     "build": "rm -rf ./dist && rollup -c --bundleConfigAsCjs",
     "test": "jest",
     "lint": "eslint --config .eslintrc 'src/**/*.{js,ts,tsx}'"

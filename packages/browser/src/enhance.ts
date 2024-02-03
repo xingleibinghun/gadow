@@ -3,7 +3,7 @@
  */
 import { EventTypes } from '@sohey/types'
 import { global, enhance } from '@sohey/utils'
-import { eventEmitter } from '@sohey/core'
+import { getEventEmitter } from '@sohey/core'
 import {
   throttled,
   needIgnoreUrl,
@@ -21,7 +21,7 @@ const enhanceErrorListener = () => {
     e => {
       // e 的数据类型：EventError、throw 抛出的具体数据类型
       if (!isResourceLoadedError(e)) {
-        eventEmitter.emit(EventTypes.Error, e)
+        getEventEmitter().emit(EventTypes.Error, e)
       }
     },
     true
@@ -36,7 +36,7 @@ const enhanceResourceListener = () => {
     'error',
     e => {
       if (isResourceLoadedError(e)) {
-        eventEmitter.emit(EventTypes.Resource, e)
+        getEventEmitter().emit(EventTypes.Resource, e)
       }
     },
     true
@@ -49,7 +49,7 @@ const enhanceResourceListener = () => {
  */
 const enhanceUnhandledrejectionListener = () => {
   global.addEventListener('unhandledrejection', e => {
-    eventEmitter.emit(EventTypes.Unhandledrejection, e)
+    getEventEmitter().emit(EventTypes.Unhandledrejection, e)
   })
 }
 
@@ -107,7 +107,7 @@ const enhanceXhr = () => {
               // @ts-ignore
               const requestInfo = this.__requestInfo
               const ok = 200 <= status && status <= 299
-              eventEmitter.emit(EventTypes.Xhr, {
+              getEventEmitter().emit(EventTypes.Xhr, {
                 url: requestInfo.url,
                 method: requestInfo.method,
                 headers: requestInfo.headers,
@@ -155,7 +155,7 @@ const enhanceFetch = () => {
               .clone()
               .text()
               .then((text: string) => {
-                eventEmitter.emit(EventTypes.Fetch, {
+                getEventEmitter().emit(EventTypes.Fetch, {
                   url,
                   method: init.method || 'GET',
                   headers: init.headers || {},
@@ -170,7 +170,7 @@ const enhanceFetch = () => {
           .catch((rejectReason: any) => {
             const url = input instanceof Request ? input.url : input
             if (needIgnoreUrl(url)) return
-            eventEmitter.emit(EventTypes.Fetch, {
+            getEventEmitter().emit(EventTypes.Fetch, {
               url,
               method: init.method || 'GET',
               headers: init.headers || {},
@@ -206,7 +206,7 @@ const enhanceHistory = () => {
     const from = prev
     const to = location.href.slice(location.origin.length)
     prev = to
-    eventEmitter.emit(EventTypes.History, {
+    getEventEmitter().emit(EventTypes.History, {
       from,
       to
     })
@@ -220,7 +220,7 @@ const enhanceHistory = () => {
       const to = args.length === 3 ? args[2] : undefined
       const from = prev
       prev = to
-      eventEmitter.emit(EventTypes.History, {
+      getEventEmitter().emit(EventTypes.History, {
         from,
         to
       })
@@ -241,7 +241,7 @@ const enhanceHashchange = () => {
   if (!('onhashchange' in global)) return
 
   global.addEventListener('hashchange', (e: HashChangeEvent) => {
-    eventEmitter.emit(EventTypes.Hashchange, e)
+    getEventEmitter().emit(EventTypes.Hashchange, e)
   })
 }
 
@@ -252,7 +252,7 @@ const enhanceClick = () => {
   if (!('document' in global)) return
 
   const onClick = throttled((e: Event) => {
-    eventEmitter.emit(EventTypes.Click, e)
+    getEventEmitter().emit(EventTypes.Click, e)
   })
   global.document.addEventListener('click', onClick)
 }
