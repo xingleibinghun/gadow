@@ -1,8 +1,5 @@
 import { getClient } from '@sohey/core'
 
-/**
- * 判断是否同一个路径(不含 URL search)
- */
 export const isSamePath = (url1: string, url2: string) => {
   try {
     const parsedUrl1 = new URL(url1)
@@ -41,10 +38,6 @@ export const getRelativeUrl = (url?: string) => {
   return urlInstance.href.slice(urlInstance.origin.length)
 }
 
-/**
- * 是否需要忽略
- * @param url
- */
 export const needIgnoreUrl = (url: string) => {
   const client = getClient()
   if (!client) return false

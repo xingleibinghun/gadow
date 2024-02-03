@@ -1,6 +1,19 @@
 {
   "name": "@sohey/replay",
   "version": "1.0.0",
+  "description": "Sohey replay for SDK",
+  "keywords": [
+    "sohey",
+    "replay"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xingleibinghun/sohey.git",
+    "directory": "packages/replay"
+  },
+  "homepage": "https://github.com/xingleibinghun/sohey/tree/master/packages/replay",
+  "author": "Sohey <andyhuaoffice@163.com>",
+  "license": "MIT",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,28 +21,19 @@
     "dist/",
     "README.md"
   ],
+  "engines": {
+    "node": ">=16"
+  },
   "scripts": {
     "start": "rollup -c --bundleConfigAsCjs -w",
-    "build": "rm -rf ./dist && rollup -c --bundleConfigAsCjs",
+    "build": "rollup -c --bundleConfigAsCjs",
     "test": "jest",
     "lint": "eslint --config .eslintrc 'src/**/*.{js,ts,tsx}'"
   },
   "dependencies": {
-    "@sohey/core": "workspace:*",
-    "@sohey/types": "workspace:*",
-    "@sohey/utils": "workspace:*",
+    "@sohey/core": "1.0.0",
+    "@sohey/types": "1.0.0",
+    "@sohey/utils": "1.0.0",
     "rrweb": "2.0.0-alpha.11"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   }
 }

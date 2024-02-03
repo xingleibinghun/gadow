@@ -1,6 +1,18 @@
 {
   "name": "@sohey/core",
   "version": "1.0.0",
+  "description": "Sohey core for sdk",
+  "keywords": [
+    "sohey"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xingleibinghun/sohey.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/xingleibinghun/sohey/tree/master/packages/core",
+  "author": "Sohey <andyhuaoffice@163.com>",
+  "license": "MIT",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,15 +20,18 @@
     "dist/",
     "README.md"
   ],
+  "engines": {
+    "node": ">=16"
+  },
   "scripts": {
     "start": "rollup -c --bundleConfigAsCjs -w",
-    "build": "rm -rf ./dist && rollup -c --bundleConfigAsCjs",
+    "build": "rollup -c --bundleConfigAsCjs",
     "test": "jest",
     "lint": "eslint --config .eslintrc 'src/**/*.{js,ts,tsx}'"
   },
   "dependencies": {
-    "@sohey/types": "workspace:*",
-    "@sohey/utils": "workspace:*",
+    "@sohey/types": "1.0.0",
+    "@sohey/utils": "1.0.0",
     "error-stack-parser": "^2.1.4",
     "rrweb": "2.0.0-alpha.11",
     "ua-parser-js": "^1.0.37",
@@ -24,17 +39,5 @@
   },
   "devDependencies": {
     "@types/uuid": "^9.0.8"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   }
 }
