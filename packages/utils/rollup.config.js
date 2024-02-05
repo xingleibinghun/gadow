@@ -1,5 +1,5 @@
-import { getRollupConfigs } from '../../scripts/rollup.config'
+const { getRollupConfigs } = require('../../scripts/rollup.config')
 
 const rollupConfigs = getRollupConfigs()
 
-export default rollupConfigs
+module.exports = rollupConfigs

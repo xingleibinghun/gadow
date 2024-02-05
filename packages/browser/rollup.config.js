@@ -1,5 +1,10 @@
-import { getRollupConfigs } from '../../scripts/rollup.config'
+const { getRollupConfigs } = require('../../scripts/rollup.config')
 
-const rollupConfigs = getRollupConfigs()
+const rollupConfigs = getRollupConfigs((configs, getConfig) => {
+  const config = getConfig('umd', 'index.trace.umd.min.js', { minify: true })
+  config.input = 'src/index.trace'
+  configs.push(config)
+  return configs
+})
 
-export default rollupConfigs
+module.exports = rollupConfigs

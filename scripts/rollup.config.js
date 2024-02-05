@@ -1,15 +1,15 @@
-import { babel } from '@rollup/plugin-babel'
-import typescript from '@rollup/plugin-typescript'
-import commonjs from '@rollup/plugin-commonjs'
-import resolve from '@rollup/plugin-node-resolve'
-import json from '@rollup/plugin-json'
-import terser from '@rollup/plugin-terser'
-import { DEFAULT_EXTENSIONS } from '@babel/core'
-import fs from 'fs'
-import path from 'path'
+const { babel } = require('@rollup/plugin-babel')
+const typescript = require('@rollup/plugin-typescript')
+const commonjs = require('@rollup/plugin-commonjs')
+const resolve = require('@rollup/plugin-node-resolve')
+const json = require('@rollup/plugin-json')
+const terser = require('@rollup/plugin-terser')
+const fs = require('fs')
+const path = require('path')
 
-function getConfig(format, filename, { includesTypes, minify } = {}) {
-  const pkg = fs.readFileSync(path.join(__dirname, 'package.json'), 'utf-8')
+function getConfig(format, filename, { minify } = {}) {
+  const dir = process.cwd()
+  const pkg = fs.readFileSync(path.join(dir, 'package.json'), 'utf-8')
   const { name } = JSON.parse(pkg)
   return {
     input: 'src/index',
@@ -21,16 +21,12 @@ function getConfig(format, filename, { includesTypes, minify } = {}) {
     },
     plugins: [
       resolve({
-        extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx']
+        extensions: ['.ts', '.tsx']
       }),
-      ...(includesTypes
-        ? [
-            typescript({
-              tsconfig: path.join(__dirname, 'tsconfig.json'),
-              exclude: ['__tests__']
-            })
-          ]
-        : []),
+      typescript({
+        tsconfig: path.join(dir, 'tsconfig.json'),
+        exclude: ['__tests__']
+      }),
       commonjs(),
       babel({
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
@@ -44,11 +40,18 @@ function getConfig(format, filename, { includesTypes, minify } = {}) {
   }
 }
 
-export const getRollupConfigs = () => {
-  return [
-    getConfig('esm', 'index.js', { includesTypes: true }),
+const getRollupConfigs = transform => {
+  const configs = [
+    getConfig('esm', 'index.js'),
     getConfig('cjs', 'index.cjs.js'),
     getConfig('umd', 'index.umd.js'),
     getConfig('umd', 'index.umd.min.js', { minify: true })
   ]
+  return typeof transform === 'function'
+    ? transform(configs, getConfig)
+    : configs
+}
+
+module.exports = {
+  getRollupConfigs
 }

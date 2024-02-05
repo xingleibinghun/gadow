@@ -24,8 +24,8 @@
     "node": ">=16"
   },
   "scripts": {
-    "start": "rollup -c --bundleConfigAsCjs -w",
-    "build": "rollup -c --bundleConfigAsCjs",
+    "start": "rollup -c -w",
+    "build": "rollup -c",
     "test": "jest",
     "lint": "eslint --config .eslintrc 'src/**/*.{js,ts,tsx}'"
   },
