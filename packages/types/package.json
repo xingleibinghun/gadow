@@ -1,17 +1,17 @@
 {
-  "name": "@sohey/types",
+  "name": "@gadow/types",
   "version": "1.0.0",
-  "description": "Sohey types for SDK",
+  "description": "Gadow types for SDK",
   "keywords": [
-    "sohey"
+    "gadow"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/xingleibinghun/sohey.git",
+    "url": "https://github.com/xingleibinghun/gadow.git",
     "directory": "packages/types"
   },
-  "homepage": "https://github.com/xingleibinghun/sohey/tree/master/packages/types",
-  "author": "Sohey <andyhuaoffice@163.com>",
+  "homepage": "https://github.com/xingleibinghun/gadow/tree/master/packages/types",
+  "author": "Gadow <andyhuaoffice@163.com>",
   "license": "MIT",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",

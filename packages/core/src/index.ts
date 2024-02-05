@@ -1,4 +1,4 @@
-import { BreadcrumbData, TransportOrigin, User } from '@sohey/types'
+import { BreadcrumbData, TransportOrigin, User } from '@gadow/types'
 import { getStore } from './store'
 import { getClient } from './client'
 

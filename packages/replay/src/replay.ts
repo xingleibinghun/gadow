@@ -1,12 +1,12 @@
 import { record as recordByRrweb } from 'rrweb'
-import { getClient, getStore } from '@sohey/core'
+import { getClient, getStore } from '@gadow/core'
 import {
   EventTypes,
   ExceptionTypes,
   PluginSetupOptions,
   ReplayEvent
-} from '@sohey/types'
-import { generateId, getInternalPluginName } from '@sohey/utils'
+} from '@gadow/types'
+import { generateId, getInternalPluginName } from '@gadow/utils'
 import { ReplayOptions } from './types'
 
 // @ts-ignore

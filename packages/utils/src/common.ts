@@ -1,4 +1,4 @@
-import { ErrorException } from '@sohey/types'
+import { ErrorException } from '@gadow/types'
 import { v4 as uuidv4 } from 'uuid'
 import ErrorStackParser from 'error-stack-parser'
 
@@ -8,7 +8,7 @@ export const enhance = (source: any, prop: string, enhancedFn: Function): void =
 }
 
 export const getInternalPluginName = (name: string): string => {
-  return `Sohey_${String(name).toLowerCase()}`
+  return `Gadow_${String(name).toLowerCase()}`
 }
 
 export const generateId = uuidv4

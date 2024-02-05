@@ -1,9 +1,9 @@
 /**
  * 异常事件的处理函数集合
  */
-import { EventTypes, HttpException } from '@sohey/types'
-import { getClient } from '@sohey/core'
-import { getErrorInfo } from '@sohey/utils'
+import { EventTypes, HttpException } from '@gadow/types'
+import { getClient } from '@gadow/core'
+import { getErrorInfo } from '@gadow/utils'
 
 const handleFactory = (transform: Function) => {
   return (...args: any[]) => {

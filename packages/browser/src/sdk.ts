@@ -1,12 +1,12 @@
-import { getEventEmitter } from '@sohey/core'
+import { getEventEmitter } from '@gadow/core'
 import {
   EventTypes,
   Options,
   ExceptionTypes,
   BreadcrumbTypes,
   ClientOptions
-} from '@sohey/types'
-import { global, hasProperty, deduplicateArray } from '@sohey/utils'
+} from '@gadow/types'
+import { global, hasProperty, deduplicateArray } from '@gadow/utils'
 import { BrowserClient } from './client'
 import { transport } from './transport'
 import { enhanceMap } from './enhance'
@@ -27,12 +27,12 @@ export const init = (opts: Options) => {
 }
 
 const setClient = (client: BrowserClient) => {
-  if (!global.__Sohey) {
-    global.__Sohey = {
+  if (!global.__Gadow) {
+    global.__Gadow = {
       client
     }
   } else {
-    global.__Sohey.client = client
+    global.__Gadow.client = client
   }
 }
 

@@ -1,4 +1,4 @@
-import { EventTypes } from '@sohey/types'
+import { EventTypes } from '@gadow/types'
 import { EventEmitter, getEventEmitter, setEventEmitter } from '../../src/event'
 
 describe('Event', () => {

@@ -1,17 +1,17 @@
 {
-  "name": "@sohey/core",
+  "name": "@gadow/core",
   "version": "1.0.0",
-  "description": "Sohey core for sdk",
+  "description": "Gadow core for sdk",
   "keywords": [
-    "sohey"
+    "gadow"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/xingleibinghun/sohey.git",
+    "url": "https://github.com/xingleibinghun/gadow.git",
     "directory": "packages/core"
   },
-  "homepage": "https://github.com/xingleibinghun/sohey/tree/master/packages/core",
-  "author": "Sohey <andyhuaoffice@163.com>",
+  "homepage": "https://github.com/xingleibinghun/gadow/tree/master/packages/core",
+  "author": "Gadow <andyhuaoffice@163.com>",
   "license": "MIT",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
@@ -30,8 +30,8 @@
     "lint": "eslint --config .eslintrc 'src/**/*.{js,ts,tsx}'"
   },
   "dependencies": {
-    "@sohey/types": "1.0.0",
-    "@sohey/utils": "1.0.0",
+    "@gadow/types": "1.0.0",
+    "@gadow/utils": "1.0.0",
     "error-stack-parser": "^2.1.4",
     "rrweb": "2.0.0-alpha.11",
     "ua-parser-js": "^1.0.37",

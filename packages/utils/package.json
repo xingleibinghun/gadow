@@ -1,17 +1,17 @@
 {
-  "name": "@sohey/utils",
+  "name": "@gadow/utils",
   "version": "1.0.0",
-  "description": "Sohey utils for SDK",
+  "description": "Gadow utils for SDK",
   "keywords": [
-    "sohey"
+    "gadow"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/xingleibinghun/sohey.git",
+    "url": "https://github.com/xingleibinghun/gadow.git",
     "directory": "packages/utils"
   },
-  "homepage": "https://github.com/xingleibinghun/sohey/tree/master/packages/utils",
-  "author": "Sohey <andyhuaoffice@163.com>",
+  "homepage": "https://github.com/xingleibinghun/gadow/tree/master/packages/utils",
+  "author": "Gadow <andyhuaoffice@163.com>",
   "license": "MIT",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
@@ -30,7 +30,7 @@
     "lint": "eslint --config .eslintrc 'src/**/*.{js,ts,tsx}'"
   },
   "dependencies": {
-    "@sohey/types": "1.0.0",
+    "@gadow/types": "1.0.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

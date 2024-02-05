@@ -1,2 +1,2 @@
 export * from './index.base'
-export { Replay } from '@sohey/replay'
+export { Replay } from '@gadow/replay'

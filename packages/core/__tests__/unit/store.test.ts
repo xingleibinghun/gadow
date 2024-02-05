@@ -1,4 +1,4 @@
-import { EventTypes } from '@sohey/types'
+import { EventTypes } from '@gadow/types'
 import { getStore, setStore, Store } from '../../src/store'
 
 describe('Store', () => {

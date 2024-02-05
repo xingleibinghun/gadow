@@ -1,18 +1,18 @@
 {
-  "name": "@sohey/replay",
+  "name": "@gadow/replay",
   "version": "1.0.0",
-  "description": "Sohey replay for SDK",
+  "description": "Gadow replay for SDK",
   "keywords": [
-    "sohey",
+    "gadow",
     "replay"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/xingleibinghun/sohey.git",
+    "url": "https://github.com/xingleibinghun/gadow.git",
     "directory": "packages/replay"
   },
-  "homepage": "https://github.com/xingleibinghun/sohey/tree/master/packages/replay",
-  "author": "Sohey <andyhuaoffice@163.com>",
+  "homepage": "https://github.com/xingleibinghun/gadow/tree/master/packages/replay",
+  "author": "Gadow <andyhuaoffice@163.com>",
   "license": "MIT",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
@@ -31,9 +31,9 @@
     "lint": "eslint --config .eslintrc 'src/**/*.{js,ts,tsx}'"
   },
   "dependencies": {
-    "@sohey/core": "1.0.0",
-    "@sohey/types": "1.0.0",
-    "@sohey/utils": "1.0.0",
+    "@gadow/core": "1.0.0",
+    "@gadow/types": "1.0.0",
+    "@gadow/utils": "1.0.0",
     "rrweb": "2.0.0-alpha.11"
   }
 }

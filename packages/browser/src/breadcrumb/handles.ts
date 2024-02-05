@@ -1,8 +1,8 @@
 /**
  * 用户行为事件的处理函数集合
  */
-import { getStore } from '@sohey/core'
-import { EventTypes, HistoryBreadcrumb } from '@sohey/types'
+import { getStore } from '@gadow/core'
+import { EventTypes, HistoryBreadcrumb } from '@gadow/types'
 import { getRelativeUrl } from '../utils'
 
 const handleFactory = (transform: Function): Function => {

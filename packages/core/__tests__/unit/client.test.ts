@@ -1,5 +1,5 @@
-import { EventTypes } from '@sohey/types'
-import { global } from '@sohey/utils'
+import { EventTypes } from '@gadow/types'
+import { global } from '@gadow/utils'
 import { TestClient, getDefaultClientOptions, setClient } from '../mocks/client'
 import { dsn, apiToken } from '../mocks/config'
 
@@ -8,7 +8,7 @@ describe('Client', () => {
   const beforeTransport = jest.fn(event => event)
 
   beforeEach(() => {
-    global.__Sohey = undefined
+    global.__Gadow = undefined
   })
 
   afterEach(() => {

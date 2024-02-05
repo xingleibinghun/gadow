@@ -1,4 +1,4 @@
-import { ClientOptions, TransportOptions } from '@sohey/types'
+import { ClientOptions, TransportOptions } from '@gadow/types'
 
 export interface BrowserClientOptions extends ClientOptions {}
 

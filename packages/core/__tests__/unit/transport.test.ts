@@ -1,4 +1,4 @@
-import { EventTypes } from '@sohey/types'
+import { EventTypes } from '@gadow/types'
 import { createTransport } from '../../src/transport'
 import { fetchRequest } from '../mocks/transport'
 import { apiToken, dsn } from '../mocks/config'

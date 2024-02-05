@@ -1,9 +1,9 @@
 /**
  * 增强底层函数 - 触发事件发布器，传入处理后的数据
  */
-import { EventTypes } from '@sohey/types'
-import { global, enhance } from '@sohey/utils'
-import { getEventEmitter } from '@sohey/core'
+import { EventTypes } from '@gadow/types'
+import { global, enhance } from '@gadow/utils'
+import { getEventEmitter } from '@gadow/core'
 import {
   throttled,
   needIgnoreUrl,

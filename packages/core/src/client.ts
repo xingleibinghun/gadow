@@ -5,8 +5,8 @@ import {
   Transport,
   EventTypes,
   PluginSetupOptions
-} from '@sohey/types'
-import { generateId, getErrorInfo, global, hasProperty } from '@sohey/utils'
+} from '@gadow/types'
+import { generateId, getErrorInfo, global, hasProperty } from '@gadow/utils'
 import { getEventEmitter } from './event'
 
 interface PluginMap {
@@ -79,5 +79,5 @@ export abstract class BaseClient<O extends ClientOptions> implements Client<O> {
 }
 
 export const getClient = <C extends Client>(): C | undefined => {
-  return global.__Sohey ? (global.__Sohey.client as C) : undefined
+  return global.__Gadow ? (global.__Gadow.client as C) : undefined
 }

@@ -1,6 +1,6 @@
 import fetch from 'node-fetch'
-import { getClient, getStore } from '@sohey/core'
-import { EventTypes } from '@sohey/types'
+import { getClient, getStore } from '@gadow/core'
+import { EventTypes } from '@gadow/types'
 import { init, captureException } from '../../src'
 import { sleep, xhr } from '../utils'
 import { transport as defaultTransport } from '../mocks/transport'

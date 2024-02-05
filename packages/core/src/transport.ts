@@ -3,13 +3,13 @@ import {
   Types as QueueTypes,
   generateId,
   getInternalPluginName
-} from '@sohey/utils'
+} from '@gadow/utils'
 import {
   Transport,
   TransportOptions,
   TransportRequest,
   TransportTarget
-} from '@sohey/types'
+} from '@gadow/types'
 import { getClient } from './client'
 import { getStore } from './store'
 

@@ -1,4 +1,4 @@
-import { getClient } from '@sohey/core'
+import { getClient } from '@gadow/core'
 
 export const isSamePath = (url1: string, url2: string) => {
   try {

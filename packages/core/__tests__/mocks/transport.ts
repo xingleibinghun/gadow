@@ -4,7 +4,7 @@ import {
   TransportOptions,
   TransportRequest,
   TransportTarget
-} from '@sohey/types'
+} from '@gadow/types'
 import { xhr } from '../utils'
 
 export const fetchRequest: TransportRequest = (

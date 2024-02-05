@@ -4,8 +4,8 @@ import {
   Store as IStore,
   User,
   StoreOptions
-} from '@sohey/types'
-import { hasProperty, global } from '@sohey/utils'
+} from '@gadow/types'
+import { hasProperty, global } from '@gadow/utils'
 import { UAParser } from 'ua-parser-js'
 
 export class Store implements IStore {
@@ -76,19 +76,19 @@ export class Store implements IStore {
 }
 
 export const setStore = (store: Store) => {
-  if (!global.__Sohey) {
-    global.__Sohey = {
+  if (!global.__Gadow) {
+    global.__Gadow = {
       store
     }
   } else {
-    global.__Sohey.store = store
+    global.__Gadow.store = store
   }
 }
 
 export const getStore = (): Store => {
-  if (!global.__Sohey || !global.__Sohey.store) {
+  if (!global.__Gadow || !global.__Gadow.store) {
     setStore(new Store())
   }
   // @ts-ignore
-  return global.__Sohey.store as Store
+  return global.__Gadow.store as Store
 }

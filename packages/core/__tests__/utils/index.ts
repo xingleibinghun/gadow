@@ -1,4 +1,4 @@
-import { TransportOptions } from '@sohey/types'
+import { TransportOptions } from '@gadow/types'
 
 export function sleep(ms: number) {
   return new Promise(resolve => {

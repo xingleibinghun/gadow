@@ -1,7 +1,7 @@
-import { Client, Store } from '@sohey/types'
+import { Client, Store } from '@gadow/types'
 
 interface Global extends Window {
-  __Sohey?: {
+  __Gadow?: {
     client?: Client
     store?: Store
   }

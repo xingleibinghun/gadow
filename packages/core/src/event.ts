@@ -1,4 +1,4 @@
-import { EventTypes } from '@sohey/types'
+import { EventTypes } from '@gadow/types'
 
 let globalEventEmitter: EventEmitter | undefined
 

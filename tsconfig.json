@@ -4,11 +4,11 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["*"],
-      "@sohey/browser": ["./packages/browser"],
-      "@sohey/core": ["./packages/core"],
-      "@sohey/replay": ["./packages/replay"],
-      "@sohey/utils": ["./packages/utils"],
-      "@sohey/types": ["./packages/types"]
+      "@gadow/browser": ["./packages/browser"],
+      "@gadow/core": ["./packages/core"],
+      "@gadow/replay": ["./packages/replay"],
+      "@gadow/utils": ["./packages/utils"],
+      "@gadow/types": ["./packages/types"]
     }
   }
 }

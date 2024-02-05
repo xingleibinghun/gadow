@@ -4,8 +4,8 @@ module.exports = {
   ...baseConfig,
   testEnvironment: 'jsdom',
   moduleNameMapper: {
-    '^@sohey/core$': require.resolve('@sohey/core'),
-    '^@sohey/utils$': require.resolve('@sohey/utils'),
-    '^@sohey/types$': require.resolve('@sohey/types')
+    '^@gadow/core$': require.resolve('@gadow/core'),
+    '^@gadow/utils$': require.resolve('@gadow/utils'),
+    '^@gadow/types$': require.resolve('@gadow/types')
   }
 }

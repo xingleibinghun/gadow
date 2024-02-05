@@ -5,8 +5,8 @@ export {
   addBreadcrumb,
   transport,
   captureException
-} from '@sohey/core'
-export { getInternalPluginName, getErrorInfo } from '@sohey/utils'
+} from '@gadow/core'
+export { getInternalPluginName, getErrorInfo } from '@gadow/utils'
 export type {
   BreadcrumbData,
   EventTypes,
@@ -20,5 +20,5 @@ export type {
   TransportTarget,
   TransportOptions,
   Transport
-} from '@sohey/types'
+} from '@gadow/types'
 export { init } from './sdk'

@@ -1,5 +1,5 @@
-import { Options, ClientOptions } from '@sohey/types'
-import { global } from '@sohey/utils'
+import { Options, ClientOptions } from '@gadow/types'
+import { global } from '@gadow/utils'
 import { BaseClient } from '../../src'
 import { transport } from './transport'
 
@@ -25,12 +25,12 @@ export const init = (opts: Options) => {
 }
 
 export const setClient = (client: TestClient) => {
-  if (!global.__Sohey) {
-    global.__Sohey = {
+  if (!global.__Gadow) {
+    global.__Gadow = {
       client
     }
   } else {
-    global.__Sohey.client = client
+    global.__Gadow.client = client
   }
 }
 

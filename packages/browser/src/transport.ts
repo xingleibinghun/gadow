@@ -1,10 +1,10 @@
-import { getClient, createTransport } from '@sohey/core'
+import { getClient, createTransport } from '@gadow/core'
 import {
   TransportOptions,
   TransportTarget,
   TransportRequest,
   ClientOptions
-} from '@sohey/types'
+} from '@gadow/types'
 
 const fetchRequest: TransportRequest = (
   options: TransportOptions,
