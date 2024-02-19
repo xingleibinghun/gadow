@@ -109,16 +109,16 @@ importers:
     dependencies:
       '@gadow/core':
         specifier: 1.0.0
-        version: 1.0.0
+        version: link:../core
       '@gadow/replay':
         specifier: 1.0.0
-        version: 1.0.0
+        version: link:../replay
       '@gadow/types':
         specifier: 1.0.0
-        version: 1.0.0
+        version: link:../types
       '@gadow/utils':
         specifier: 1.0.0
-        version: 1.0.0
+        version: link:../utils
       error-stack-parser:
         specifier: ^2.1.4
         version: 2.1.4
@@ -133,10 +133,10 @@ importers:
     dependencies:
       '@gadow/types':
         specifier: 1.0.0
-        version: 1.0.0
+        version: link:../types
       '@gadow/utils':
         specifier: 1.0.0
-        version: 1.0.0
+        version: link:../utils
       error-stack-parser:
         specifier: ^2.1.4
         version: 2.1.4
@@ -158,13 +158,13 @@ importers:
     dependencies:
       '@gadow/core':
         specifier: 1.0.0
-        version: 1.0.0
+        version: link:../core
       '@gadow/types':
         specifier: 1.0.0
-        version: 1.0.0
+        version: link:../types
       '@gadow/utils':
         specifier: 1.0.0
-        version: 1.0.0
+        version: link:../utils
       rrweb:
         specifier: 2.0.0-alpha.11
         version: 2.0.0-alpha.11
@@ -1656,41 +1656,6 @@ packages:
     resolution: {integrity: sha512-gMsVel9D7f2HLkBma9VbtzZRehRogVRfbr++f06nL2vnCGCNlzOD+/MUov/F4p8myyAHspEhVobgjpX64q5m6A==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
-
-  /@gadow/core@1.0.0:
-    resolution: {integrity: sha512-WaqxVfyzXuU34kdgSirn3blN7q/7UzdQQmIoMsrYOv++PDB6hZoZFyrQnExC4IkoTkH3JSB87rnjb0NA0iQAqg==}
-    engines: {node: '>=16'}
-    dependencies:
-      '@gadow/types': 1.0.0
-      '@gadow/utils': 1.0.0
-      error-stack-parser: 2.1.4
-      rrweb: 2.0.0-alpha.11
-      ua-parser-js: 1.0.37
-      uuid: 9.0.1
-    dev: false
-
-  /@gadow/replay@1.0.0:
-    resolution: {integrity: sha512-jg9BOMj52mBsV5Wb2xEchjcEDIuBZ45MdwtVRXeAgbwjZAWLFDv10FJi4o/DazM/xzvSORqVg/jxkGtT6LYiMA==}
-    engines: {node: '>=16'}
-    dependencies:
-      '@gadow/core': 1.0.0
-      '@gadow/types': 1.0.0
-      '@gadow/utils': 1.0.0
-      rrweb: 2.0.0-alpha.11
-    dev: false
-
-  /@gadow/types@1.0.0:
-    resolution: {integrity: sha512-Smmyq1HdmnwnLBlsMN76BC48YThWHoav9gZQGT/7OdfPqp/1q0nVsfxIb69rzroRfL7RgeMvzcyIB07GRaPX+A==}
-    engines: {node: '>=16'}
-    dev: false
-
-  /@gadow/utils@1.0.0:
-    resolution: {integrity: sha512-J3l0iICG++xT1EiI7v3ZUjSkX8vEKFBuQHv0RXLMEfKKujHJzdaDe7DoeZA7krwUNTb9+aYMTxfy4QTcHcUr0g==}
-    engines: {node: '>=16'}
-    dependencies:
-      '@gadow/types': 1.0.0
-      uuid: 9.0.1
-    dev: false
 
   /@humanwhocodes/config-array@0.11.14:
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
